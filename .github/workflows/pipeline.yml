@@ -32,7 +32,7 @@ jobs:
     - name: Set Hugging Face token
       run: echo "HF_TOKEN=${{ secrets.HF_TOKEN }}" >> $GITHUB_ENV
 
-    - name: Upload model.pkl to Hugging Face
-      run: hf upload --repo-id DrNiha555/visit_with_us_model model.pkl
+    - name: Upload model to Hugging Face
+      run: hf upload DrNiha555/visit_with_us_model model.pkl
       env:
         HF_TOKEN: ${{ secrets.HF_TOKEN }}
