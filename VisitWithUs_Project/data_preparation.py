@@ -15,7 +15,3 @@ train_df.to_csv("data/train.csv", index=False)
 test_df.to_csv("data/test.csv", index=False)
 
 print("Data preparation complete. Train and test sets saved.")
-git add data/tourism.csv
-git commit -m "Add tourism.csv dataset"
-git push origin main
-
