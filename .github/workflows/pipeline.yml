@@ -2,13 +2,15 @@ name: MLOps Pipeline
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v3
 
     - name: Set up Python
@@ -17,13 +19,18 @@ jobs:
         python-version: '3.9'
 
     - name: Install dependencies
-      run: pip install -r requirements.txt
+      run: |
+        pip install -r requirements.txt
+        pip install -U huggingface_hub
 
-    - name: Run Data Preparation
+    - name: Run data preparation
       run: python VisitWithUs_Project/data_preparation.py
 
-    - name: Train Model
+    - name: Run model training
       run: python VisitWithUs_Project/train_model.py
 
-    - name: Deploy to Hugging Face
-      run: huggingface-cli upload
+    - name: Authenticate with Hugging Face
+      run: echo "${{ secrets.HF_TOKEN }}" | hf login --token
+
+    - name: Upload model to Hugging Face
+      run: hf upload --repo-id DrNiha555/visit_with_us model.pkl
