@@ -5,12 +5,17 @@ import joblib
 # Load training data
 train_df = pd.read_csv("data/train.csv")
 
-# Example: assume target column is 'label'
-X = train_df.drop("label", axis=1)
-y = train_df["label"]
+# Show columns for debugging
+print("Columns in train.csv:", train_df.columns)
+
+# Replace 'Purchased' with your actual target column name
+target_col = "Purchased"   # <-- change this to match your dataset
+
+X = train_df.drop(target_col, axis=1)
+y = train_df[target_col]
 
 # Train model
-model = LogisticRegression()
+model = LogisticRegression(max_iter=200)
 model.fit(X, y)
 
 # Save model
