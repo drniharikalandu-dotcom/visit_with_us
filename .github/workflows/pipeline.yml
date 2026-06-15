@@ -29,8 +29,10 @@ jobs:
     - name: Run model training
       run: python VisitWithUs_Project/train_model.py
 
-    - name: Authenticate with Hugging Face
-      run: echo "${{ secrets.HF_TOKEN }}" | hf login --token
+    - name: Set Hugging Face token
+      run: echo "HF_TOKEN=${{ secrets.HF_TOKEN }}" >> $GITHUB_ENV
 
     - name: Upload model to Hugging Face
       run: hf upload --repo-id DrNiha555/visit_with_us model.pkl
+      env:
+        HF_TOKEN: ${{ secrets.HF_TOKEN }}
