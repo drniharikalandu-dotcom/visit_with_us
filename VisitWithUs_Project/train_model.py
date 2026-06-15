@@ -8,10 +8,11 @@ train_df = pd.read_csv("data/train.csv")
 # Show columns for debugging
 print("Columns in train.csv:", train_df.columns)
 
-# Replace 'Purchased' with your actual target column name
-target_col = "Purchased"   # <-- change this to match your dataset
+# Target column is 'ProdTaken'
+target_col = "ProdTaken"
 
-X = train_df.drop(target_col, axis=1)
+# Features (drop target + any unwanted index column)
+X = train_df.drop([target_col, "Unnamed: 0", "CustomerID"], axis=1)
 y = train_df[target_col]
 
 # Train model
@@ -22,3 +23,4 @@ model.fit(X, y)
 joblib.dump(model, "model.pkl")
 
 print("Model training complete. Saved as model.pkl")
+
