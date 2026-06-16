@@ -30,10 +30,10 @@ jobs:
         from huggingface_hub import HfApi
         api = HfApi()
         api.create_repo(
-            name="visit_with_us_model",
+            repo_id="DrNiha555/visit_with_us_model",  # ✅ full repo path
             repo_type="model",
             token=os.environ["HF_TOKEN"],
-            exist_ok=True  # ✅ prevents error if repo already exists
+            exist_ok=True
         )
         EOF
       env:
