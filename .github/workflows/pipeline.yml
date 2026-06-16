@@ -21,36 +21,25 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-        pip install scikit-learn pandas joblib huggingface_hub
+        pip install scikit-learn pandas joblib huggingface_hub streamlit
 
     - name: Run training script
       run: python VisitWithUs_Project/train_model.py
 
-    - name: Copy artifacts to repo root
-      run: |
-        cp VisitWithUs_Project/model.pkl model.pkl
-        cp VisitWithUs_Project/scaler.pkl scaler.pkl
-
-    - name: Upload model to Hugging Face
+    - name: Upload artifacts to Hugging Face
       run: |
         python - <<EOF
         import os
         from huggingface_hub import HfApi
         api = HfApi()
-        api.upload_file(
-            path_or_fileobj="model.pkl",
-            path_in_repo="model.pkl",
-            repo_id="DrNiha555/visit_with_us_model",
-            repo_type="model",
-            token=os.environ["HF_TOKEN"]
-        )
-        api.upload_file(
-            path_or_fileobj="scaler.pkl",
-            path_in_repo="scaler.pkl",
-            repo_id="DrNiha555/visit_with_us_model",
-            repo_type="model",
-            token=os.environ["HF_TOKEN"]
-        )
+        for file in ["model.pkl", "scaler.pkl"]:
+            api.upload_file(
+                path_or_fileobj=file,
+                path_in_repo=file,
+                repo_id="DrNiha555/visit_with_us_model",
+                repo_type="model",
+                token=os.environ["HF_TOKEN"]
+            )
         EOF
       env:
         HF_TOKEN: ${{ secrets.HF_TOKEN }}
