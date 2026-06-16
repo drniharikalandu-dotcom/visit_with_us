@@ -49,3 +49,23 @@ for file in ["model.pkl", "scaler.pkl"]:
     )
 
 print("✅ Model and scaler saved & uploaded to Hugging Face Hub")
+from huggingface_hub import HfApi
+
+api = HfApi()
+# Ensure repo exists
+api.create_repo(
+    name="visit_with_us_model",
+    repo_type="model",
+    token=os.environ.get("HF_TOKEN"),
+    exist_ok=True  # ✅ prevents error if repo already exists
+)
+
+# Upload artifacts
+for file in ["model.pkl", "scaler.pkl"]:
+    api.upload_file(
+        path_or_fileobj=file,
+        path_in_repo=file,
+        repo_id="DrNiha555/visit_with_us_model",
+        repo_type="model",
+        token=os.environ.get("HF_TOKEN")
+    )
