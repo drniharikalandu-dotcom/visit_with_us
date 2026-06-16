@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 import joblib
-from huggingface_hub import hf_hub_download
+from huggingface_hub import HfApi, hf_hub_download
 
 # Load dataset from Hugging Face Hub
 repo_id = "DrNiha555/visit_with_us"  # dataset repo
@@ -33,9 +33,19 @@ X_test_scaled = scaler.transform(X_test)
 model = LogisticRegression(max_iter=1000)
 model.fit(X_train_scaled, y_train)
 
-# Save artifacts directly to repo root
+# Save artifacts locally
 joblib.dump(model, "model.pkl")
 joblib.dump(scaler, "scaler.pkl")
 
-print("✅ Model trained and saved at repo root")
+# Upload artifacts to Hugging Face Model Hub
+api = HfApi()
+for file in ["model.pkl", "scaler.pkl"]:
+    api.upload_file(
+        path_or_fileobj=file,
+        path_in_repo=file,
+        repo_id="DrNiha555/visit_with_us_model",  # model repo
+        repo_type="model",
+        token="YOUR_HF_TOKEN"  # replace with env var in workflow
+    )
 
+print("✅ Model and scaler saved & uploaded to Hugging Face Hub")
