@@ -27,3 +27,8 @@ jobs:
       run: python VisitWithUs_Project/train_model.py
       env:
         HF_TOKEN: ${{ secrets.HF_TOKEN }}
+    - name: Run training script
+      run: python VisitWithUs_Project/train_model.py
+      env:
+        HF_TOKEN: ${{ secrets.HF_TOKEN }}
+
