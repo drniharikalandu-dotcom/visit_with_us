@@ -1,27 +1,34 @@
+# ✅ Correct imports
 import pandas as pd
+from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 import joblib
 
-# Load training data
-train_df = pd.read_csv("data/train.csv")
+# 📥 Load dataset (adjust path if needed)
+# Example assumes tourism.csv is inside a "data" folder at repo root
+data = pd.read_csv("data/tourism.csv")
 
-print("Columns in train.csv:", train_df.columns)
+# 🧹 Drop identifier columns if present
+data = data.drop(columns=["CustomerID", "Unnamed: 0"], errors="ignore")
 
-# Target column
-target_col = "ProdTaken"
+# 🎯 Define target and features
+X = data.drop("ProdTaken", axis=1)
+y = data["ProdTaken"]
 
-# Drop unwanted columns
-X = train_df.drop([target_col, "Unnamed: 0", "CustomerID"], axis=1)
-y = train_df[target_col]
-
-# Convert categorical columns to numeric using one-hot encoding
+# 🔄 One-hot encode categorical features
 X = pd.get_dummies(X)
 
-# Train logistic regression model
-model = LogisticRegression(max_iter=500)
-model.fit(X, y)
+# ✂️ Train/test split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
 
-# Save model
+# 🤖 Train logistic regression model
+model = LogisticRegression(max_iter=500)
+model.fit(X_train, y_train)
+
+# 💾 Save model to repo root
 joblib.dump(model, "model.pkl")
 
-print("Model training complete. Saved as model.pkl")
+print("✅ Model trained and saved as model.pkl")
+
