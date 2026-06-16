@@ -36,3 +36,6 @@ jobs:
       run: hf upload DrNiha555/visit_with_us_model model.pkl
       env:
         HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        - name: Train model
+  run: python VisitWithUs_Project/train_model.py
+
