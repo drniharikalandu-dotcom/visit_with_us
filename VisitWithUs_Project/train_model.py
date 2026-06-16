@@ -42,3 +42,8 @@ joblib.dump(model, "model.pkl")
 joblib.dump(scaler, "scaler.pkl") # Save scaler as well for inference
 
 print("✅ Model trained and saved as model.pkl")
+# Save model and scaler to repo root
+joblib.dump(model, "model.pkl")
+joblib.dump(scaler, "scaler.pkl")
+print("✅ Model trained and saved as model.pkl")
+
