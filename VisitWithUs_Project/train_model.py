@@ -37,5 +37,4 @@ model.fit(X_train_scaled, y_train)
 joblib.dump(model, "model.pkl")
 joblib.dump(scaler, "scaler.pkl")
 
-print("✅ Model trained and saved as model.pkl and scaler.pkl")
-
+print("✅ Model trained and saved at repo root")
